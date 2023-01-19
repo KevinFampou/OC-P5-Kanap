@@ -1,6 +1,6 @@
 // Récupération du panier et des ses données
 let cart = JSON.parse(localStorage.getItem("cart"))
-console.log(cart)
+
 // Tableau ou seront stockées les données de l'API
 let productData = []
 
