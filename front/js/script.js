@@ -1,16 +1,21 @@
+// Tableau ou seront stockées les données de l'API
 let kanapData = []
-const items = document.getElementById("items")
 
+// Fonction de récupération des données API
   fetchKanap = async () => {
   await fetch("http://localhost:3000/api/products")
         .then((res) => res.json())
         .then((data) => kanapData = data)                                               
 }
 
+// Fonction d'affichage des produits de la page d'accueil
 const kanapDisplay = async () => {
-    await fetchKanap() 
+      await fetchKanap() 
 
-    kanapData.forEach(element => {
+      kanapData.forEach(element => {
+
+        const items = document.getElementById("items")
+
         items.innerHTML += 
         `<div>
             <a href="./product.html?id=${element._id}">
