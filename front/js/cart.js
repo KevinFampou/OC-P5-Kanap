@@ -54,11 +54,7 @@ if (cart && cart.length > 0) {
     cartProducts.addEventListener("change", changeQuantity)
       })    
     }
-  } 
-
-else {
-  alert("Le panier est vide.")
-  }    
+  }   
 }
 
 cartDisplay()
@@ -153,7 +149,7 @@ form.addEventListener('submit', (e) => {
   }
 
   if (isValid) {
-    btnOrder.addEventListener("click", orderItems)
+    orderItems()
   }
 })
 
