@@ -16,11 +16,11 @@ const  fetchProduct = async () => {
   const productDisplay = async () => {
     await fetchProduct() 
 
-let productImg = document.querySelector(".item__img")
-let productTitle = document.querySelector("#title")
-let productPrice = document.querySelector("#price")
-let productDescription = document.querySelector("#description")
-let productColors = document.querySelector("#colors")
+const productImg = document.querySelector(".item__img")
+const productTitle = document.querySelector("#title")
+const productPrice = document.querySelector("#price")
+const productDescription = document.querySelector("#description")
+const productColors = document.querySelector("#colors")
 
 productData.forEach(element => {
     if (id === element._id) {
@@ -82,8 +82,8 @@ button.addEventListener("click", (e) => {
     let color = document.querySelector("#colors").value
     let quantity = Number(document.querySelector("#quantity").value)
     
-// Si pas de couleur ou quantité inférieur à 1 ou supérieur 100, message d'alerte
-    if (color === "" || quantity < 1 || quantity > 100) {
+// Si pas de couleur ou quantité inférieur à 1 ou supérieur 100 et que la quantité n'est pas un nombre entier, message d'alerte
+    if (color === "" || quantity < 1 || quantity > 100 || quantity % 2 !== 0) {
         alert("Veuillez selectionner une couleur et/ou ajouter une quantité comprise entre 1 et 100")
         } 
 // Sinon on ajoute bien le produit au panier        

@@ -17,7 +17,7 @@ const kanapDisplay = async () => {
         const items = document.getElementById("items")
 
         items.innerHTML += 
-        `<div>
+        `
             <a href="./product.html?id=${element._id}">
                 <article>
                     <img src="${element.imageUrl}" alt="${element.altTxt}">
@@ -25,7 +25,7 @@ const kanapDisplay = async () => {
                     <p class="productDescription">${element.description}</p>
                 </article>
             </a>
-        </div>`
+        `
     });
 }
 
