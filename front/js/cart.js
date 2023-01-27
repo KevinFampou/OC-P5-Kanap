@@ -16,10 +16,6 @@ const  fetchProduct = async () => {
     await fetchProduct()
 
 const cartProducts = document.getElementById("cart__items")
-const ProductsTotalQUantity = document.querySelector("#totalQuantity")
-const ProductsTotalPrice = document.querySelector("#totalPrice")
-let totalQuantity = 0
-let totalPrice = 0
 
 if (cart && cart.length > 0) {
   for (let i = 0; i < cart.length; i++) {
@@ -47,44 +43,61 @@ if (cart && cart.length > 0) {
          </div>
        </article>`
 
-    ProductsTotalQUantity.innerHTML = `${totalQuantity += cart[i].quantity}`
-    ProductsTotalPrice.innerHTML = `${totalPrice += e.price * cart[i].quantity}`
-
-    cartProducts.addEventListener("click", deleteItem)
-    cartProducts.addEventListener("change", changeQuantity)
+       cartProducts.addEventListener("click", deleteItem)
+       cartProducts.addEventListener("change", changeQuantity)
       })    
+      updateTotal()
     }
   }   
 }
 
 cartDisplay()
 
+// Fonction de mise à jour du prix/qauntité total 
+const  updateTotal = () => {
+  let totalQuantity = 0;
+  let totalPrice = 0;
+  
+  for(let i = 0; i < cart.length; i++) {
+    totalQuantity += cart[i].quantity;
+    let product = productData.find(e => e._id === cart[i].id);
+    totalPrice += product.price * cart[i].quantity;
+  }
+  let ProductsTotalQuantity = document.querySelector("#totalQuantity");
+  let ProductsTotalPrice = document.querySelector("#totalPrice");
+  ProductsTotalQuantity.innerText = totalQuantity;
+  ProductsTotalPrice.innerText = totalPrice;
+}
+
 // Fonction de supression d'un produit dans le localstorage
 const deleteItem = (e) => {
   if (e.target.classList.contains("deleteItem")) {
-    targetId = e.target.closest('.cart__item').dataset.id
-    targetColor = e.target.closest('.cart__item').dataset.color
+    let target = e.target.closest('.cart__item')
+    targetId = target.dataset.id
+    targetColor = target.dataset.color
     cart = cart.filter(item => item.id !== targetId  || item.color !== targetColor)
     localStorage.setItem("cart", JSON.stringify(cart))
-    location.reload()
+    target.remove()
   }
 }
 
 // Fonction pour modifier la quantité d'un d'un produit dans le localstorage  
 const changeQuantity = (e) => {
 if (e.target.classList.contains("itemQuantity")) {
-  targetId = e.target.closest('.cart__item').dataset.id
-  targetColor = e.target.closest('.cart__item').dataset.color 
+  let target = e.target.closest('.cart__item')
+  targetId = target.dataset.id
+  targetColor = target.dataset.color
   selectedProduct = cart.find(item => item.id === targetId && item.color === targetColor)
   selectedProduct.quantity = Number(e.target.value)
 // Si la quantité du produit sélectionné est changée par l'utilisateur à plus de 100 ou moins de 1, message d'alerte  
   if (selectedProduct.quantity < 1 || selectedProduct.quantity > 100) {
     alert("Veuillez ajouter une quantité comprise entre 1 et 100")
   } 
-// Sinon le changement s'effectue correctement et est mis à jour dans le localstorage, puis la page est rechargée  
+// Sinon le changement s'effectue correctement et est mis à jour dans le localstorage  
   else {
     localStorage.setItem("cart", JSON.stringify(cart))
-    location.reload()
+    target.querySelector('.itemQuantity').textContent = selectedProduct.quantity
+    updateTotal()
     }
   }
 }
