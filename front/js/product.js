@@ -7,7 +7,7 @@ let productData = []
 
 // Fonction recuperation données API
 const  fetchProduct = async () => {
-    await fetch("http://localhost:3000/api/products")
+    await fetch(`http://localhost:3000/api/products/${id}`)
           .then((res) => res.json())
           .then((data) => productData = data)                                                     
   }
@@ -22,18 +22,16 @@ const productPrice = document.querySelector("#price")
 const productDescription = document.querySelector("#description")
 const productColors = document.querySelector("#colors")
 
-productData.forEach(element => {
-    if (id === element._id) {
-        productImg.innerHTML = `<img src="${element.imageUrl}" alt="${element.altTxt}"></img>`
-        productTitle.innerHTML = `${element.name}`
-        productPrice.innerHTML = `${element.price}`
-        productDescription.innerHTML = `${element.description}`
 
-        element.colors.forEach(color => {
+productImg.innerHTML = `<img src="${productData.imageUrl}" alt="${productData.altTxt}"></img>`
+productTitle.innerHTML = `${productData.name}`
+productPrice.innerHTML = `${productData.price}`
+productDescription.innerHTML = `${productData.description}`
+
+productData.colors.forEach(color => {
             productColors.innerHTML += `<option value="${color}">${color}</option>`
-        })
-    }
-})
+    })
+}
 
 // Fonction d'enregistrement du panier dans le localstorage sous forme de chaine de caractères
 const saveCart = (cart) => {
@@ -97,9 +95,6 @@ button.addEventListener("click", (e) => {
         addCart(product)  
         }   
     })
-}
-
-
 
 productDisplay()
 
